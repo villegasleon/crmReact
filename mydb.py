@@ -4,6 +4,7 @@
 #pip install mysql-connector
 #pip install mysql-connector-python
 # correr python mydb.py para que se genera la base de datos
+#primera vez python manage.py makemigrations
 # correr python manage.py migrate para que se creen todas las tablas predefinidas en mysql
 # crear super user / python manage.py createsuperuser
 #ahora hacemos correr el servidor / python manage.py runserver
