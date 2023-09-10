@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'crm.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'crmdjangodb',
+        'NAME': 'crmreactdb',
         'USER': 'root',
         'PASSWORD': 'admin',
         'HOST': 'localhost',
