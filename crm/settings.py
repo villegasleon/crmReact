@@ -9,7 +9,15 @@ https://docs.djangoproject.com/en/4.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.2/ref/settings/
 """
-# Otras configuraciones de Django
+import os
+from corsheaders.defaults import default_headers
+
+#confirgura cors para comunicacion con React
+CORS_ALLOWED_ORIGINS = [
+    'http://localhost:3000',  # Para el servidor de desarrollo de React
+]
+
+
 DATE_FORMAT = 'd/m/Y'
 
 from pathlib import Path
@@ -40,7 +48,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'website',
-    'schedule'
+    'schedule',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
@@ -51,6 +60,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
 ]
 
 ROOT_URLCONF = 'crm.urls'
@@ -129,3 +139,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# Configuración para servir archivos estáticos en desarrollo
+FRONTEND_DIR = os.path.join(BASE_DIR, 'crmReactDjango', 'crmReact', 'frontend', 'my-react-app')
+STATICFILES_DIRS = [
+    os.path.join(FRONTEND_DIR, 'build', 'static'),
+]
+
+    

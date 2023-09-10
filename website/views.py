@@ -1,36 +1,36 @@
-from django.shortcuts import redirect, render
-from django.contrib.auth import authenticate, login, logout
-from django.contrib import messages
-from .forms import SignUpForm, AddRecordForm, SearchRecordForm
-from .models import Record, Event
-from django.db.models import Q
-from schedule.models import Calendar
-from schedule.periods import Day
-from datetime import datetime
-from django.contrib.auth.decorators import login_required
-from .forms import EventForm, Event
 from django.http import JsonResponse
+from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import authenticate, login
+from django.contrib import messages
+from .models import Record
+import json
+from corsheaders import cors_headers
+import traceback
+import os
 
-
+# Vista para procesar solicitudes POST y habilitar CORS si es necesario
+@csrf_exempt
 def home(request):
-    records = Record.objects.all() 
-    #check to see if logging in
     if request.method == 'POST':
-        username=request.POST['username']
-        password=request.POST['password'] 
-        #authenticate
+        # Procesar el inicio de sesión desde React
+        data = json.loads(request.body)
+        username = data['username']
+        password = data['password']
+
         user = authenticate(request, username=username, password=password)
+
         if user is not None:
             login(request, user)
-            messages.success(request, "Has iniciado sesión")
-            return redirect('home')
+            return JsonResponse({'message': 'Sesión iniciada correctamente'}, status=200)
         else:
-            messages.success(request, "Hubo un error al iniciar sesión, intentelo nuevamente")
-            return redirect('home')
-            
+            return JsonResponse({'message': 'Hubo un error al iniciar sesión'}, status=400)
     else:
-        return render(request, 'home.html', {'records': records})
-                
+        # Obtener todos los registros para mostrar con React
+        records = Record.objects.all()
+        records_data = [{'id': record.id, 'name': record.name} for record in records]
+        return JsonResponse({'records': records_data})
+
+""""                
 def logout_user(request):
     logout(request)
     messages.success(request, "Has cerrado tu sesión")
@@ -164,4 +164,4 @@ def calendar_activity(request):
 
     # Renderiza la vista 'calendar_activity.html' junto con los datos JSON de los eventos
     return render(request, 'calendar_activity.html', {'events_data': serialized_events})
-    
+    """
