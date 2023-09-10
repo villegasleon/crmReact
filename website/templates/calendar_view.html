@@ -1,0 +1,59 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="card">
+    <div class="card-header">
+        <strong>Crear Evento</strong>
+    </div>
+    <div class="card-body">
+        <form method="post">
+        
+            {% csrf_token %}
+            
+            <div class="form-group">
+                {{ form.title.label_tag }}
+                {{ form.title }}
+            </div>
+            <br> </br>
+            <div class="form-group">
+                {{ form.description.label_tag }}
+                {{ form.description }}
+            </div>
+            
+            <br> </br>
+
+            <div class="form-group">
+                {{ form.start_time.label_tag }}
+                {{ form.start_time }}
+            </div>
+
+            <br> </br>
+
+            <div class="form-group">
+                {{ form.start_hour.label_tag }}
+                {{ form.start_hour }}
+            </div>
+            <br> </br>
+            <div class="form-group">
+                {{ form.end_time.label_tag }}
+                {{ form.end_time }}
+            </div>
+            <br> </br>
+            <div class="form-group">
+                {{ form.end_hour.label_tag }}
+                {{ form.end_hour }}
+            </div>
+            <br> </br>
+            <div class="form-group">
+                {{ form.customer_record.label_tag }}
+                {{ form.customer_record }}
+            </div>
+            <br> </br>
+            <button type="submit" class="btn btn-primary">Crear Evento</button>
+            <br><br>
+            <a href="{% url 'home' %}" class="btn btn-secondary">Back</a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
