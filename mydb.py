@@ -21,6 +21,6 @@ database= mysql.connector.connect(
 cursorObject= database.cursor()
 
 #create a database
-cursorObject.execute("CREATE DATABASE crmdjangodb")
+cursorObject.execute("CREATE DATABASE crmreactdb")
 
 print('All Done!!')
